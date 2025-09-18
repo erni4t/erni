@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Помощник для Лены и Даши</title>
+    <link rel="stylesheet" href="index.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
+          "marked": "https://esm.sh/marked@^15.0.7"
+        }
+      }
+    </script>
+    <script type="module" src="index.tsx"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Для Лены и Даши</h1>
+        <p>
+          Леночка, введи название и потом кнопку сгенерировать, чтобы получить
+          SEO-данные
+        </p>
+      </header>
+      <form id="seo-form">
+        <div class="form-group">
+          <label for="article-title">Название новой статьи</label>
+          <input
+            type="text"
+            id="article-title"
+            name="article-title"
+            placeholder="например, 'Современные методы лечения мигрени'"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="article-type">Тип страницы</label>
+          <select id="article-type" name="article-type" required>
+            <option value="направление">Направление</option>
+            <option value="услуга">Услуга</option>
+            <option value="заболевание">Заболевание</option>
+            <option value="статья">Статья</option>
+          </select>
+        </div>
+        <button type="submit" id="generate-button">Сгенерировать</button>
+      </form>
+      <div id="loading-spinner" class="hidden">
+        <div class="spinner"></div>
+      </div>
+      <section id="results-container" class="hidden" aria-live="polite"></section>
+    </main>
+  </body>
+</html>
