@@ -24,27 +24,30 @@
           SEO-данные
         </p>
       </header>
+      <div id="api-key-error" class="hidden"></div>
       <form id="seo-form">
-        <div class="form-group">
-          <label for="article-title">Название новой статьи</label>
-          <input
-            type="text"
-            id="article-title"
-            name="article-title"
-            placeholder="например, 'Современные методы лечения мигрени'"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="article-type">Тип страницы</label>
-          <select id="article-type" name="article-type" required>
-            <option value="направление">Направление</option>
-            <option value="услуга">Услуга</option>
-            <option value="заболевание">Заболевание</option>
-            <option value="статья">Статья</option>
-          </select>
-        </div>
-        <button type="submit" id="generate-button">Сгенерировать</button>
+        <fieldset id="form-fieldset">
+          <div class="form-group">
+            <label for="article-title">Название новой статьи</label>
+            <input
+              type="text"
+              id="article-title"
+              name="article-title"
+              placeholder="например, 'Современные методы лечения мигрени'"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="article-type">Тип страницы</label>
+            <select id="article-type" name="article-type" required>
+              <option value="направление">Направление</option>
+              <option value="услуга">Услуга</option>
+              <option value="заболевание">Заболевание</option>
+              <option value="статья">Статья</option>
+            </select>
+          </div>
+          <button type="submit" id="generate-button">Сгенерировать</button>
+        </fieldset>
       </form>
       <div id="loading-spinner" class="hidden">
         <div class="spinner"></div>

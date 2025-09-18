@@ -13,6 +13,10 @@ const API_KEY = process.env.API_KEY;
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const seoForm = document.getElementById('seo-form') as HTMLFormElement;
+const formFieldset = document.getElementById(
+  'form-fieldset',
+) as HTMLFieldSetElement;
+const apiKeyError = document.getElementById('api-key-error') as HTMLDivElement;
 const generateButton = document.getElementById(
   'generate-button',
 ) as HTMLButtonElement;
@@ -48,14 +52,16 @@ const responseSchema = {
   required: ['url', 'title', 'description', 'keywords'],
 };
 
+// Check for API Key on page load
+if (!API_KEY) {
+  apiKeyError.innerHTML = `<p><strong>Ошибка конфигурации:</strong> API-ключ не найден.</p>
+    <p>Пожалуйста, убедитесь, что переменная окружения <code>API_KEY</code> правильно установлена в настройках вашего проекта на Vercel.</p>`;
+  apiKeyError.classList.remove('hidden');
+  formFieldset.disabled = true;
+}
+
 seoForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (!API_KEY) {
-    resultsContainer.innerHTML =
-      '<p>API-ключ не настроен. Пожалуйста, убедитесь, что переменная окружения API_KEY установлена.</p>';
-    resultsContainer.classList.remove('hidden');
-    return;
-  }
 
   const formData = new FormData(seoForm);
   const articleTitle = formData.get('article-title') as string;
@@ -79,7 +85,7 @@ seoForm.addEventListener('submit', async (event) => {
       systemInstruction = `Ты — SEO-эксперт. Твоя задача — создавать качественные и продающие SEO-данные для коммерческих страниц сайта медицинской клиники (направления и услуги). Вместо названия конкретной клиники используй слово 'клиника' (с маленькой буквы, если это не начало предложения). Подчеркивай преимущества лечения в клинике, используй призывы к действию (например, 'запишитесь на прием', 'узнайте стоимость'). Слово 'платно' используй умеренно, чтобы указать на коммерческий характер услуг. Убедись, что Title и Description звучат привлекательно для потенциального клиента и мотивируют его перейти на сайт.`;
     } else {
       // Informational pages
-      systemInstruction = `Ты — SEO-эксперт. Твоя задача — создавать качественные и информативные SEO-данные для информационных страниц сайта медицинской клиники (описание заболеваний и статьи). Вместо названия конкретной клиники используй слово 'клиника' (с маленькой буквы, если это не начало предложения). Фокусируйся на пользе для читателя, экспертности и полноте информации. Избегай прямых продаж и агрессивных призывов к действию. Если упоминаешь лечение, можешь уместно использовать слово 'платно', чтобы обозначить, что услуги клиники являются платными. Главная цель — предоставить пользователю полезный контент и показать экспертизу клиники. Title и Description должны быть информативными и вызывать доверие.`;
+      systemInstruction = `Ты — SEO-эксперт. Твоя задача — создавать качественные и информативные SEO-данные для информационных страниц сайта медицинской клиники (описание заболеваний и статьи). Вместо названия конкретной клиники используй слово 'клиника' (с маленькой буквы, если это не начало предложения). Фокусируйся на пользе для читателя, экспертности и полноте информации. Избегай прямых продаж и агрессивных призывов к действию. Если упоминаешь лечение, можешь уместно использовать слово 'платно', чтобы обозначить, что услуги клиники являются платными. Главная цель — предоставить пользователю полезный контент и показать экспертизу клиники. Title и Description должны быть информативными и вызывают доверие.`;
     }
 
     const contents = `Сгенерируй SEO-данные для страницы типа '${articleType}' с заголовком '${articleTitle}'.`;
