@@ -54,8 +54,17 @@ const responseSchema = {
 
 // Check for API Key on page load
 if (!API_KEY) {
-  apiKeyError.innerHTML = `<p><strong>Ошибка конфигурации:</strong> API-ключ не найден.</p>
-    <p>Пожалуйста, убедитесь, что переменная окружения <code>API_KEY</code> правильно установлена в настройках вашего проекта на Vercel.</p>`;
+  apiKeyError.innerHTML = `<p><strong>Ошибка конфигурации: API-ключ не найден.</strong></p>
+    <p>Приложение не может подключиться к Google Gemini API.</p>
+    <p><strong>Что делать:</strong></p>
+    <ol>
+      <li>Перейдите в настройки вашего проекта на Vercel.</li>
+      <li>Найдите раздел 'Environment Variables'.</li>
+      <li>Создайте новую переменную с именем <code>API_KEY</code>.</li>
+      <li>В поле 'Value' вставьте ваш API-ключ от Google AI Studio.</li>
+      <li><strong>Важно:</strong> После добавления переменной необходимо заново развернуть (Redeploy) ваш проект, чтобы изменения применились. Обычно это можно сделать на вкладке 'Deployments', выбрав последнее развертывание и нажав 'Redeploy'.</li>
+    </ol>
+    <p>Без этого ключа генерация SEO-данных невозможна.</p>`;
   apiKeyError.classList.remove('hidden');
   formFieldset.disabled = true;
 }
